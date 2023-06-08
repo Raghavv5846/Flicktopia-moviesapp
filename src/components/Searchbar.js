@@ -30,7 +30,7 @@ function Searchbar(props) {
       try {
         const response= await fetch(`https://api.themoviedb.org/3/search/multi?query=${e.target.value}&include_adult=false&language=en-US&page=1`, props.options)
         const data=await response.json();
-        console.log(data.results);
+        
         setData(data.results);
       } catch (err) {
         console.log(err);
@@ -40,7 +40,8 @@ function Searchbar(props) {
         }
         // useEffect(() => {
         // },[input])
- 
+
+       
     return (
         <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{position:"relative",zIndex:"0"}}>
   <div className="carousel-inner" data-bs-interval="10000">
@@ -57,7 +58,7 @@ function Searchbar(props) {
   </div>
     <div style={{zIndex:"1",color:"white",position: "absolute",top:"20%",left: "50%",transform: "translate(-50%, -50%)"}}>
       <h3 style={{fontSize: "5rem",fontWeight: "900"}}>
-        ShowFLIX
+        FlickTopia
       </h3>
     </div>
     <div className="group" style={{zIndex:"1",position: "absolute",top:"40%",left: "50%",transform: "translate(-50%, -50%)"}}>

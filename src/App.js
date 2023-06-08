@@ -6,11 +6,16 @@ import { BrowserRouter as Router, Route, Routes,} from "react-router-dom";
 import cors from 'cors';
 import Showpage from './components/Showpage';
 import Mainpage from './components/Mainpage';
-function App() {
-  const [movItems, setMovitems] = useState([]);
-  const [showItems, setShowitems] = useState([]);
-  const [movPage, setMovpage] = useState(null);
+import Signup from './components/Signup';
+import './js/signin'
+import Axios from 'axios';
+import Sign from './components/Login';
+import Mainmoviepage from './components/Mainmoviepage';
 
+
+function App() {
+  
+  const [movPage, setMovpage] = useState(null);
 
   const options = {
     method: 'GET',
@@ -20,47 +25,53 @@ function App() {
     }
   }
   
-  useEffect(() => {
-  const fetchmovie=async ()=>{
-    try {
-      const response= await fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', options)
-      const data=await response.json();
+  // useEffect(() => {
+  // const fetchmovie=async ()=>{
+  //   try {
+  //     const response= await fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', options)
+  //     const data=await response.json();
       
-      setMovitems(data.results);
-    } catch (err) {
-      console.log(err);
-            }
-        }   
+  //     setMovitems(data.results);
+  //   } catch (err) {
+  //     console.log(err);
+  //           }
+  //       }   
 
-      const fetchshow=async ()=>{
-        try {
-          const response= await fetch('https://api.themoviedb.org/3/trending/tv/week?language=en-US', options)
-          const data=await response.json();
+  //     const fetchshow=async ()=>{
+  //       try {
+  //         const response= await fetch('https://api.themoviedb.org/3/trending/tv/week?language=en-US', options)
+  //         const data=await response.json();
           
-          setShowitems(data.results);
-        } catch (err) {
-          console.log(err);
-        }
-      }   
-       
-
-          fetchmovie();
-          fetchshow();
+  //         setShowitems(data.results);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }   
+  //         fetchmovie();
+  //         fetchshow();
          
-        },[])
+  //       },[])
+        const movItems=[];
+        const ShowItems=[];
         return (
           <>
+
           <Router>
             <Routes>
-              <Route exact path='/' element={<Mainpage options={options} movies={movItems} shows={showItems}/>}/>
+              <Route exact path='/' element={<Mainpage options={options} />}/>
               <Route exact path='/movie/:id' element={<Moviepage options={options}/>}/>
               <Route exact path='/show/:id' element={<Showpage options={options}/>}/>
+              <Route exact path='/sign-in/' element={<Sign/>}/>
+              <Route exact path='/sign-up/' element={<Signup/>}/>
+              <Route exact path='/movies/' element={<Mainmoviepage/>}/>
 
 
             </Routes>
           </Router>
+    
     </>
   );
+        
 };
   
 export default App;

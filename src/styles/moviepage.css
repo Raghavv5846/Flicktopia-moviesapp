@@ -122,3 +122,16 @@
     text-decoration: none;
     color: white;
   }
+  .main-showItems{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+  }
+  @media screen and (max-width:768px) {
+    .main-showItems{
+      display: grid;
+    grid-template-columns: repeat(5,1fr);
+    }
+    .card{
+      height: 50px;
+    }
+  }

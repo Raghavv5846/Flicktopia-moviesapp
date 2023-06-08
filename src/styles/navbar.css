@@ -33,9 +33,15 @@ body {
 	text-decoration: none;
 	color: #fff;
 	font-size: 2.5rem;
+	padding: 5px;
+	transition: all 0.3s ease-in;
 }
 
 .nav div.logo a:hover {
+	
+	background: black;
+
+	border-radius: 5px;
 	color: #00e676;
 }
 
@@ -65,9 +71,16 @@ body {
 	color: #fff;
 	line-height: 65px;
 	font-size: 2.4rem;
+	padding: 5px;
+	background: none;
+	transition: all 0.3s ease-in;
 }
 
 .nav div.main_list ul li a:hover {
+	
+	background: black;
+	/* padding: 5px; */
+	border-radius: 5px;
 	color: #00e676;
 }
 

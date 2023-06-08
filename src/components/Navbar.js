@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import '../styles/navbar.css'
 export default function Navbar(props) {
+    
   return (
     <>
     
@@ -12,10 +13,21 @@ export default function Navbar(props) {
             </div>
             <div id="mainListDiv" className="main_list">
                 <ul className="navlinks">
-                    <li><Link to="/">Movies</Link></li>
+                    {props.movItems ?
+                    <li><Link to="/movies">Movies</Link></li>
+                    :''
+                }
                     <li><Link to="/">Shows</Link></li>
-                    <li><Link to="/">Login</Link></li>
-                    <li><Link to="/">Register</Link></li>
+                    {props.logged ?
+                    <>
+                    <li><Link to="/sign-in">{props.user}</Link></li>
+                    </>
+                    :
+                    <>
+                    <li><Link to="/sign-in">Login</Link></li>
+                    <li><Link to="/sign-up">Register</Link></li> 
+                    </>
+                }
                 </ul>
             </div>
             <span className="navTrigger">

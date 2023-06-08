@@ -158,7 +158,6 @@ export default function Moviepage(props) {
     
     : <Loader/>
     }
-    {console.log(isSimilar)}
         {movdata ?
         (isSimilar ? 
         <Moviepage2 items={movdata}></Moviepage2> 
