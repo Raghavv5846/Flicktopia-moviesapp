@@ -126,12 +126,65 @@
     display: grid;
     grid-template-columns: repeat(5,1fr);
   }
+  .LazyLoad{
+    height: inherit;
+  }
+  .col-md-2{
+    padding: 15px;
+  }
+  .btn{
+    display: flex;
+    gap: 3rem;
+  }
+  .similar-and-details{
+    position:relative;
+    display:flex;
+    justify-content: center;
+    gap:2rem;
+    font-size:1.5rem;
+    color:white;
+    bottom:50px;
+    z-index:3;
+    cursor:pointer
+  }
+  .similar{
+    gap: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    background: black;
+  }
   @media screen and (max-width:768px) {
+    .col-md-2{
+      padding: 5px;
+    }
     .main-showItems{
       display: grid;
     grid-template-columns: repeat(5,1fr);
     }
     .card{
-      height: 50px;
+      height: 100px;
+      width: inherit;
+    }
+    .main-movieItems{
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+    }
+    .LazyLoad{
+      height: inherit;
+      width: inherit;
+    }
+    .movieDetails h3{
+      max-width: 20rem;
+    }
+    .trailer{
+      font-size: 9px;
+    }
+    .similar{
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
+  

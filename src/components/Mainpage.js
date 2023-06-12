@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import Searchbar from './Searchbar'
 import { Link } from 'react-router-dom'
@@ -10,14 +10,18 @@ import '../styles/input.css'
 import '../styles/moviepage.css'
 import '../styles/searched.css'
 import {MoviesContext} from '../context/MoviesContext'
+import { UserContext } from '../context/UserContext'
 
+
+export const AuthContext=createContext();
 export default function Mainpage(props) {
+    const {loading}=useContext(UserContext);
     const [loggedin,setLoggedin]=useState(false);
-    const [user,setUser]=useState();
-    console.log(useContext(MoviesContext));
-    const {movItems,showItems}=useContext(MoviesContext);
-    console.log("movItems",movItems);
+    const [user,setUser]=useState(null);
     
+    const {movItems,showItems}=useContext(MoviesContext);
+    console.log(useContext(UserContext));
+   
     // useEffect(() => {
     //     const fetchmovie=async ()=>{
     //       try {
@@ -48,7 +52,7 @@ export default function Mainpage(props) {
         axios({url: "http://localhost:8000/protected",withCredentials: true,})
             // Handle the response from backend here
             .then((res) => {
-                console.log(res.data);
+                
                 if(res.data.status==='success'){
                     setLoggedin(true);
                     setUser(res.data.user);
@@ -57,11 +61,17 @@ export default function Mainpage(props) {
             // Catch errors if any
             .catch((err) => { });
 
-    },[loggedin])
+    },[]);
 
+    if(loading){
+        return 
+        (<div>
+        <Loader/>
+        </div>)
+    }
   return (
     <>
-    <Navbar logged={loggedin} user={user} movItems={movItems} showItems={showItems}/>
+    <Navbar logged={loggedin} user={user}/>
     <Searchbar options={props.options} movies={movItems}/>
     <div className='d-flex align-items-center justify-content-center' style={{height:"10rem"}}>
         <div className='bg-dark' style={{color:"white",padding:"10px"}}>
@@ -71,12 +81,12 @@ export default function Mainpage(props) {
     {movItems ? 
     <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)"}}className='main-movieItems'>
         {movItems.map((element)=>{
-          return (
-            <Link className="col-md-2" key={element.id} style={{padding:"15px"}} to={`/movie/${element.id}`}>
+            return (
+                <Link className="col-md-2" key={element.id} to={`/movie/${element.id}`} state={{user,loggedin}}>
             <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )
-          })}
+        })}
     </div>
     : <Loader/>
 }
@@ -89,14 +99,15 @@ export default function Mainpage(props) {
     <div className='main-showItems'>
         {showItems.map((element)=>{ 
             return (
-                <Link  key={element.id} style={{padding:"15px"}} to={`/show/${element.id}`}>
-            <Showitems poster={element.poster_path} rating={element.vote_average} name={element.name} />
+                <Link  key={element.id}to={`/show/${element.id}`} state={{user,loggedin}} className="col-md-2">
+                    <Showitems poster={element.poster_path} rating={element.vote_average} name={element.name} />
         </Link>
             )
         })}
     </div>
     : <Loader/>
 }
+
         </>
   )
 }

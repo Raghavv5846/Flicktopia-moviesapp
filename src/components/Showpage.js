@@ -1,22 +1,31 @@
-import React,{useEffect,useState} from 'react'
+import React,{useContext, useEffect,useState} from 'react'
 import Loader from './loader'
 // import Select from 'react-select'
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Episodes from './Episodes';
 import '../styles/showpage.css'
 import Moviepage2 from './Similar';
 import Showsimilar from './Showsimilar';
 import Showdetails from './Showdetails';
 import Moviepage3 from './Details';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+import LazyLoad from 'react-lazy-load';
+import Navbar from './Navbar';
+
 export default function Showpage(props) {
+  
+  const {user , loggedin}=useContext(UserContext);
     const [showdata,setShowdata]=useState(null);
     const [episode,setEpisode]=useState(null)
     const [currentseason,setCurrentseason]=useState("1");
     const [selectedOption, setSelectedOption] = useState('option1');
     const {id}=useParams();
     // console.log(props.items);
+  
     const handleSelectChange = (event) => {
         // console.log("epidoesssssss",(event.target.value.innerText));
+
         const selectedOption = event.target.options[event.target.selectedIndex];
     const selectedOptionText = selectedOption.innerText;
         setCurrentseason(selectedOptionText.split(" ")[1]);
@@ -58,12 +67,27 @@ export default function Showpage(props) {
         };
         fetchepisode();
       },[showdata,props.options,currentseason]);
-
+      const handleWatch = ()=>{
+        if(user){
+          console.log(user);
+            axios({
+                url: "http://localhost:8000/add",withCredentials: true,
+                method: "POST",
+                data: {id},
+            
+            })
+                .then((res) => {console.log(res);})
+            
+                // Catch errors if any
+                .catch((err) => { });
+          }
+          }
       if(showdata){
           var options = showdata.seasons;
         }
   return (
     <>
+    <Navbar/>
     { episode && showdata ?
         <div className="backdrop" >
             <img src={`https://image.tmdb.org/t/p/original${showdata.backdrop_path}`} className='backdrop' alt=''/>
@@ -78,21 +102,26 @@ export default function Showpage(props) {
                 </select>
                 <h3>{episode.overview ? episode.overview : showdata.overview}</h3>
             <div style={{display:"flex",zIndex:"3",color:'white',gap:"3rem",fontWeight:"500",marginTop:"25px"}}>
-            <h4><a href="http://imdb.com" class="imdb-logo">{`IMDb : 6.2`}</a></h4>
+            <h4><a href="http://imdb.com" className="imdb-logo">{`IMDb : 6.2`}</a></h4>
                 {/* <p>IMDB : 6.4</p> */}
                 <h4>{episode.air_date.split("-")[0]}</h4>
                 <h4>{episode.episodes.length} Episodes</h4>
             </div>  
+            {user ?
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer'>
+            Add to Watchlist
+            </button>
             </div>
-         
-              {/* : (
-                  <div style={{display:"flex",position:"absolute",zIndex:"3",top:"65%",left:"10%"}} >
-                  <button onClick={handleFullScreen} className='trailer'>
-                  Watch Trailer
-                  </button>
-                  </div>
-                )} */}
-        <div style={{position:"relative",left:"40%",display:"flex",gap:"2rem",fontSize:"1.5rem",color:"white",bottom:"50px",zIndex:"3"}} className='bottom-parameters'>
+            :
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
+            Add to Watchlist
+            </button>
+            </div>
+            } 
+            </div>
+        <div style={{position:"relative",justifyContent:"center",display:"flex",gap:"2rem",fontSize:"1.5rem",color:"white",bottom:"50px",zIndex:"3"}} className='bottom-parameters'>
             <h4 className={`option ${selectedOption === 'option1' ? 'selected' : 'dim'}`} onClick={() => handleOptionClick('option1')}>Episodes</h4>
             <h4 className={`option ${selectedOption === 'option2' ? 'selected' : 'dim'}`} onClick={() => handleOptionClick('option2')}>Similar</h4>
             <h4 className={`option ${selectedOption === 'option3' ? 'selected' : 'dim'}`} onClick={() => handleOptionClick('option3')}>Details</h4>
@@ -104,7 +133,9 @@ export default function Showpage(props) {
         <div>
             {episode ? episode.episodes.map((e)=>{
             return(
+              <LazyLoad offset={50}>
                 <Episodes items={e} key={e.id}/>
+              </LazyLoad>
                 )
             }) : <Loader/>
         }

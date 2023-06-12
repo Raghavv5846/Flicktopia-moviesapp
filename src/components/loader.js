@@ -2,7 +2,9 @@ import React from 'react'
 
 function Loader() {
   return (
-    <div className="spinner" style={{position:"relative",left:"60px"}}></div>
+    <div className='text-center' style={{display:"flex",justifyContent:"center"}}>
+    <div className="spinner" ></div>
+    </div>
   )
 }
 

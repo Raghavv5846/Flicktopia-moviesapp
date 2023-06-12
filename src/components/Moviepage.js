@@ -1,4 +1,4 @@
-import React,{useEffect, useState,useRef} from 'react'
+import React,{useEffect, useState,useRef, useContext} from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Youtube from 'react-youtube'
 import Moviepage2 from './Similar';
@@ -8,6 +8,8 @@ import '../styles/moviepage.css'
 import '../styles/showpage.css'
 import Moviepage3 from './Details';
 import Navbar from './Navbar';
+import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 
 
 export default function Moviepage(props) {
@@ -17,9 +19,10 @@ export default function Moviepage(props) {
     const [isSimilar,setIsSimilar]=useState(true);
     const [imdbdata,setImdbdata]=useState(null);
     const [selectedOption, setSelectedOption] = useState('similar');
-
     const location = useLocation();
     const propsFromLink = location;
+    const {user,loggedin}=propsFromLink.state;
+    console.log("propsFromLink",propsFromLink.state);
     const {id}=useParams();
     
     const handleOptionClick = (option) => {
@@ -39,13 +42,13 @@ export default function Moviepage(props) {
           );
           const data = await response.json();
           setmovdata(data);
-          console.log("movdata",movdata);
+          
         } catch (err) {
           console.log(err);
         }
       };
       fetchMoviePage();
-    },[id,props.options]);
+    },[id]);
     useEffect(()=>{
 
       if (movdata) {
@@ -93,14 +96,33 @@ export default function Moviepage(props) {
    controls: "1"
       };
     
+  const handleWatch = ()=>{
+if(user){
+  console.log(user);
+    axios({
+        url: "http://localhost:8000/add",withCredentials: true,
+        method: "POST",
+        data: {id},
     
+    })
+        .then((res) => {console.log(res);})
+    
+        // Catch errors if any
+        .catch((err) => { });
+  }
+  }
+  console.log(id);
+  console.log(user,loggedin,"Jiiiiiiiiiiiiiiiiii");
+
   const handleFullScreen = () => {
     
       setIsFullScreen(true);
 }
+
+
   return (
     <>
-    <Navbar/>
+    <Navbar logged={loggedin} user={user}/>
     {movdata ?
     <div className="backdrop" >
         <img src={`https://image.tmdb.org/t/p/original${movdata.backdrop_path}`} className='backdrop' alt=''/>
@@ -111,7 +133,7 @@ export default function Moviepage(props) {
         
         {imdbdata ? 
         <div style={{display:"flex",zIndex:"3",color:'white',gap:"3rem",fontWeight:"500"}}>
-        <h3><a href="http://imdb.com" class="imdb-logo">{`IMDb : ${imdbdata.imDb}`}</a></h3>
+        <h3><a href="http://imdb.com" className="imdb-logo">{`IMDb : ${imdbdata.imDb}`}</a></h3>
         <h3><a href="https://www.rottentomatoes.com/" style={{textDecoration:"none",color:"white"}}>
           <img style={{height:"16px",width:"16px"}} src="https://www.rottentomatoes.com/assets/pizza-pie/images/icons/tomatometer/tomatometer-fresh.149b5e8adc3.svg"/> 62%
           </a></h3>
@@ -141,14 +163,29 @@ export default function Moviepage(props) {
         }
         </div>
           : (
+            <div className='btn'>
               <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
             <button onClick={handleFullScreen} className='trailer'>
             Watch Trailer
             </button>
             </div>
+            {user ?
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer'>
+            Add to Watchlist
+            </button>
+            </div>
+            :
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
+            Add to Watchlist
+            </button>
+            </div>
+            }
+            </div>
           )}
          </div>
-    <div style={{position:"relative",left:"45%",display:"flex",gap:"2rem",fontSize:"1.5rem",color:"white",bottom:"50px",zIndex:"3",cursor:"pointer"}}>
+    <div className='similar-and-details'>
         {/* <a className='details' onClick={() => setIsSimilar(true)}>Similar</a>
         <a style={{filter:"brightness(0.3)"}} onClick={() => setIsSimilar(false)} >Details</a> */}
         <h4 className={`option ${selectedOption === 'similar' ? 'selected' : 'dim'}`} onClick={() => handleOptionClick('similar')}>Similar</h4>

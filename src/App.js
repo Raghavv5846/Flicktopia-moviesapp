@@ -11,6 +11,9 @@ import './js/signin'
 import Axios from 'axios';
 import Sign from './components/Login';
 import Mainmoviepage from './components/Mainmoviepage';
+import Mainshowpage from './components/Mainshowpage';
+import Watchlist from './components/Watchlist';
+import { UserContext } from './context/UserContext';
 
 
 function App() {
@@ -55,6 +58,7 @@ function App() {
         const ShowItems=[];
         return (
           <>
+          
 
           <Router>
             <Routes>
@@ -62,12 +66,13 @@ function App() {
               <Route exact path='/movie/:id' element={<Moviepage options={options}/>}/>
               <Route exact path='/show/:id' element={<Showpage options={options}/>}/>
               <Route exact path='/sign-in/' element={<Sign/>}/>
-              <Route exact path='/sign-up/' element={<Signup/>}/>
-              <Route exact path='/movies/' element={<Mainmoviepage/>}/>
-
-
+              <Route exact path='/sign-up/' element={<Signup/>}/> 
+              <Route exact path='/movies/' element={<Mainmoviepage options={options}/>}/>
+              <Route exact path='/shows/' element={<Mainshowpage options={options}/>}/>
+              <Route exact path='/watchlist/' element={<Watchlist options={options}/>}/>
             </Routes>
           </Router>
+          
     
     </>
   );

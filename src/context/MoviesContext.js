@@ -37,7 +37,7 @@ export default function Apicontext({children}) {
                 fetchshow();
                
               },[]);
-              console.log("value",movItems);
+             
               if (!movItems || !showItems) {
                 // Return a loading state or any placeholder until data is fetched
                 return <Loader/>

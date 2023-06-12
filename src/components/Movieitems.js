@@ -7,14 +7,14 @@ export default function Movieitems(props) {
         <div className="card ">
   <div className="content">
     <div className="back">
-        <LazyLoad offset={50} height={408} >
+        <LazyLoad offset={50} >
            <img src={`https://image.tmdb.org/t/p/original${props.poster}`} style={{height:"inherit",width:"inherit"}}/>
         </LazyLoad>
       </div>
     <div className="front">
       
       <div className="img">
-      <LazyLoad offset={50} height={408} >
+      <LazyLoad offset={50}>
            <img src={`https://image.tmdb.org/t/p/original${props.poster}`} style={{height:"inherit",width:"inherit"}}/>
         </LazyLoad>
         <div className="circle">
