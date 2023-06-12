@@ -7,6 +7,7 @@ const passport=require('passport');
 const passportLocal=require('./config/passport_local');
 const MongoStore = require('connect-mongo');
 let User=require('./models/user');
+let Watch=require('./models/watchlist');
 const cors=require('cors');
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
@@ -35,13 +36,31 @@ app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(passport.setAuthenticatedUser);
+app.get('/logout',passport.checkAuthentication,async (req,res)=>{
+    req.logout(()=>{
+        
+    });
 
+
+    return res.send({status:"success"});
+})
 app.get('/protected',passport.checkAuthentication,async (req,res)=>{
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     console.log(res.locals.user);
 
     return res.send({user:res.locals.user.name,status:"success"})
 })
+app.post('/add',passport.checkAuthentication,async (req,res)=>{
+const {id}=req.body;
+console.log(req.body);
+let list = await Watch.findOne({user:req.user.id});
+list.list.push(id);
+list.save();
+console.log(list);
+return res.send({status:"success"});
 
+}
+)
 app.post('/sign-in/create',async (req,res)=>{
     console.log(req.body);
     if (req.body.password != req.body.confirm_password){
@@ -52,7 +71,8 @@ app.post('/sign-in/create',async (req,res)=>{
 
     let user= await User.findOne({email: req.body.email})
         if (!user){
-            await User.create(req.body);
+            let user= await User.create(req.body);
+            await Watch.create({user:user});
             console.log("user created succesfyllu");
             return res.status(200).send({status:"success"});
         return res.redirect('back');

@@ -53,7 +53,7 @@ passport.checkAuthentication=function(req,res,next){
         return next();
     }
     // if the user is not signed in
-    console.log(req.sessionID);
+    console.log("session",req.sessionID);
     return res.send({status:"failed"});
 }
 passport.setAuthenticatedUser = function(req, res, next){
