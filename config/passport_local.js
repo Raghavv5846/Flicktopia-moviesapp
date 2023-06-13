@@ -5,8 +5,8 @@ passport.use(new LocalStrategy({
     usernameField:'email',
     passReqToCallback: true
 },
-    function(req, email,password,done){
-        let user = User.findOne({email: email})
+    async function(req, email,password,done){
+        await User.findOne({email: email})
         .then((user)=>{
             
             // Check if the password matches the user's password.

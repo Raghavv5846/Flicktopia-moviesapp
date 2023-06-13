@@ -13,7 +13,7 @@ let Watch=require('./models/watchlist');
 const cors=require('cors');
 app.use(cors({
     origin: function (origin, callback) {
-      const allowedOrigins = ['http://example.com',"http://localhost:3000"]; // Replace with the desired URL
+      const allowedOrigins = ['https://flicktopia-moviesapp.vercel.app',"http://localhost:3000"]; // Replace with the desired URL
       const isAllowed = allowedOrigins.includes(origin) || !origin;
   
       if (isAllowed) {
@@ -21,7 +21,8 @@ app.use(cors({
       } else {
         callback(new Error('Not allowed by CORS'));
       }
-    }
+    },
+    credentials:true,
   }));
 app.use(express.json());
     app.use(cookieParser());
@@ -33,7 +34,7 @@ app.use(express.json());
         saveUninitialized:false,
         resave:false,
         cookie:{
-            maxAge:(1000*30*10)
+            maxAge:(1000*30*10*10)
         },
         store: MongoStore.create(
             {
@@ -49,6 +50,25 @@ app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(passport.setAuthenticatedUser);
+app.post('/checklist',passport.checkAuthentication,async (req,res)=>{
+    console.log(req.body,req.user.id);
+    let watch = await Watch.findOne({user:req.user._id});
+    let isthere = watch.list.find(e=> e.id===parseInt(req.body.id));
+    console.log(isthere);
+        
+    console.log("watchhh",watch);
+    if(isthere){
+        return res.send({status:"included"})
+    }
+    return res.send({status:"not"})
+
+})
+app.get('/list',passport.checkAuthentication,async (req,res)=>{
+    let watch =await Watch.findOne({user:req.user.id});
+    console.log("Watch",watch);
+    return res.send({status:"success",list:watch.list});
+
+});
 app.get('/logout',passport.checkAuthentication,async (req,res)=>{
     req.logout(()=>{
         
@@ -60,7 +80,7 @@ app.get('/logout',passport.checkAuthentication,async (req,res)=>{
 app.get('/protected',passport.checkAuthentication,async (req,res)=>{
     const allowedOrigins = ['http://localhost:3000', 'https://flicktopia-moviesapp.vercel.app/']; // Add your allowed origins here
   const requestOrigin = req.get('origin');
-
+  console.log(requestOrigin,"request origin");
   if (allowedOrigins.includes(requestOrigin)) {
     res.setHeader('Access-Control-Allow-Origin', requestOrigin);
   } else {
@@ -74,8 +94,8 @@ app.get('/protected',passport.checkAuthentication,async (req,res)=>{
 app.post('/add',passport.checkAuthentication,async (req,res)=>{
 const {id}=req.body;
 console.log(req.body);
-let list = await Watch.findOne({user:req.user.id});
-list.list.push(id);
+let list = await Watch.findOneAndUpdate({user:req.user.id},{});
+list.list.push(req.body);
 list.save();
 console.log(list);
 return res.send({status:"success"});

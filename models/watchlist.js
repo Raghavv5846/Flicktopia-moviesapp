@@ -8,7 +8,7 @@ const watchSchema=new mongoose.Schema({
         ref:"User",
     },
     list:[{
-        type:String
+        type:mongoose.Schema.Types.Mixed
     }]
 },{timestamp:true})
 
