@@ -1,6 +1,8 @@
 const express=require('express');
 const cookieParser=require('cookie-parser');
 const app=express();
+const dotenv = require("dotenv");
+dotenv.config();
 const db=require('./config/mongoose');
 const session=require('express-session');
 const passport=require('passport');
@@ -9,7 +11,18 @@ const MongoStore = require('connect-mongo');
 let User=require('./models/user');
 let Watch=require('./models/watchlist');
 const cors=require('cors');
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({
+    origin: function (origin, callback) {
+      const allowedOrigins = ['http://example.com',"http://localhost:3000"]; // Replace with the desired URL
+      const isAllowed = allowedOrigins.includes(origin) || !origin;
+  
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  }));
 app.use(express.json());
     app.use(cookieParser());
 
@@ -24,7 +37,7 @@ app.use(express.json());
         },
         store: MongoStore.create(
             {
-                mongoUrl: `mongodb://127.0.0.1:27017/flicktopia`,
+                mongoUrl: `mongodb+srv://raghavpareek5846:Raghav%405846@flicktopia.np3wnm1.mongodb.net/?retryWrites=true&w=majority`,
                 autoRemove: 'disabled'
             
             },
