@@ -8,7 +8,7 @@ export default function Navbar(props) {
     const navigate = useNavigate();
     const {user,loggedin}=useContext(UserContext);
     const handleLogout=()=>{
-        axios({url: "http://localhost:8000/logout",withCredentials: true,})
+        axios({url: `${process.env.REACT_APP_HOST}/logout`,withCredentials: true,})
         // Handle the response from backend here
         .then((res) => {
             

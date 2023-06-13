@@ -1,17 +1,17 @@
 import React,{useContext, useEffect,useState} from 'react'
-import Loader from './loader'
+import Loader from '../../components/loader'
 // import Select from 'react-select'
 import { useLocation, useParams } from 'react-router-dom';
 import Episodes from './Episodes';
-import '../styles/showpage.css'
-import Moviepage2 from './Similar';
-import Showsimilar from './Showsimilar';
-import Showdetails from './Showdetails';
-import Moviepage3 from './Details';
+import '../../styles/showpage.css'
+import Moviepage2 from '../Moviepage/Similar';
+import Showsimilar from '../../components/Showsimilar';
+
+import Moviepage3 from '../Moviepage/Details';
 import axios from 'axios';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import LazyLoad from 'react-lazy-load';
-import Navbar from './Navbar';
+import Navbar from '../../components/Navbar';
 
 export default function Showpage(props) {
   
@@ -20,6 +20,17 @@ export default function Showpage(props) {
     const [episode,setEpisode]=useState(null)
     const [currentseason,setCurrentseason]=useState("1");
     const [selectedOption, setSelectedOption] = useState('option1');
+    const [watchadded,setWatchadded]=useState(false);
+    const [adding,setAdding]=useState(false);
+    const [watchdata,setWatchdata]=useState({
+      id:'',
+      image:"",
+      name:"",
+      date:"",
+      rating:"",
+      type:"tv"
+    })
+    
     const {id}=useParams();
     // console.log(props.items);
   
@@ -33,6 +44,24 @@ export default function Showpage(props) {
       const handleOptionClick = (option) => {
         setSelectedOption(option);
       };
+      useEffect(() => {
+        if(user){
+          axios({
+            url: `${process.env.REACT_APP_HOST}/checklist`,withCredentials: true,method:"post",
+            data: {id},
+          })
+          .then((res) => {
+            if(res.data.status==='included'){
+              setWatchadded(true);
+            }
+          })
+          
+          // Catch errors if any
+          .catch((err) => { });
+          
+        }
+        
+      }, [adding])
     useEffect(()=>{
         const fetchshowPage = async () => {
           try {
@@ -42,7 +71,15 @@ export default function Showpage(props) {
             );
             const data = await response.json();
             setShowdata(data);
-            console.log(showdata);
+            setWatchdata({
+              id:data.id,
+              image:data.poster_path,
+              name:data.name,
+              date:data.release_date,
+              rating:data.vote_average,
+              type:"tv"
+            })
+            
             
           } catch (err) {
             console.log(err);
@@ -69,18 +106,24 @@ export default function Showpage(props) {
       },[showdata,props.options,currentseason]);
       const handleWatch = ()=>{
         if(user){
+          setAdding(true);
           console.log(user);
-            axios({
-                url: "http://localhost:8000/add",withCredentials: true,
-                method: "POST",
-                data: {id},
-            
-            })
-                .then((res) => {console.log(res);})
-            
-                // Catch errors if any
-                .catch((err) => { });
-          }
+          axios({
+            url: `${process.env.REACT_APP_HOST}/add`,withCredentials: true,
+            method: "POST",
+            data: watchdata,
+      
+          })
+          .then((res) => {console.log(res);})
+          
+          // Catch errors if any
+          .catch((err) => { })
+          .finally(() => {
+            setAdding(false);
+            console.log("Adding completed. adding value:", adding);
+          });
+          
+        }
           }
       if(showdata){
           var options = showdata.seasons;
@@ -107,19 +150,35 @@ export default function Showpage(props) {
                 <h4>{episode.air_date.split("-")[0]}</h4>
                 <h4>{episode.episodes.length} Episodes</h4>
             </div>  
-            {user ?
+            {user ? 
+             (!watchadded ?
+               (adding ? 
+                <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer'>
+            <Loader/>
+            </button>
+            </div>
+            :
             <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
               <button onClick={handleWatch} className='trailer'>
             Add to Watchlist
             </button>
             </div>
+               )
+            :
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
+              Already added
+            </button>
+            </div>
+             )
             :
             <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
               <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
             Add to Watchlist
             </button>
             </div>
-            } 
+            }
             </div>
         <div style={{position:"relative",justifyContent:"center",display:"flex",gap:"2rem",fontSize:"1.5rem",color:"white",bottom:"50px",zIndex:"3"}} className='bottom-parameters'>
             <h4 className={`option ${selectedOption === 'option1' ? 'selected' : 'dim'}`} onClick={() => handleOptionClick('option1')}>Episodes</h4>

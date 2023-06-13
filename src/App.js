@@ -1,18 +1,18 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import Moviepage from './components/Moviepage'
+import Moviepage from './pages/Moviepage/Moviepage'
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes,} from "react-router-dom";
 import cors from 'cors';
-import Showpage from './components/Showpage';
-import Mainpage from './components/Mainpage';
-import Signup from './components/Signup';
+import Showpage from './pages/Showpage/Showpage';
+import Mainpage from './pages/Mainpage/Mainpage';
+import Signup from './pages/Signup/Signup';
 import './js/signin'
 import Axios from 'axios';
-import Sign from './components/Login';
-import Mainmoviepage from './components/Mainmoviepage';
-import Mainshowpage from './components/Mainshowpage';
-import Watchlist from './components/Watchlist';
+import Sign from './pages/Signin/Login';
+import Mainmoviepage from './pages/Mainmoviepage/Mainmoviepage';
+import Mainshowpage from './pages/Mainshowpage/Mainshowpage';
+import Watchlist from './pages/Watchlist/Watchlist';
 import { UserContext } from './context/UserContext';
 
 

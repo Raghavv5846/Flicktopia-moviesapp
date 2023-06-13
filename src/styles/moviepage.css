@@ -148,9 +148,9 @@
     cursor:pointer
   }
   .similar{
-    gap: 3rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    display: grid;
+      grid-template-columns: repeat(5,1fr);
+    
     background: black;
   }
   @media screen and (max-width:768px) {
@@ -182,7 +182,7 @@
     .similar{
       display: grid;
       grid-template-columns: repeat(5,1fr);
-      gap: 1rem;
+      gap: 0rem;
       padding-left: 1rem;
       padding-right: 1rem;
     }

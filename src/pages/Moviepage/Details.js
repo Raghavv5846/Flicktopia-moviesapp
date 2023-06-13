@@ -1,9 +1,8 @@
 import React from 'react'
-import Castcard from './Castcard';
+import Castcard from '../../components/Castcard';
 import { Link } from 'react-router-dom';
-import '../styles/details.css'
-import Episodes from './Episodes';
-import '../styles/details.css'
+import '../../styles/details.css'
+import Episodes from '../Showpage/Episodes';
 export default function Moviepage3(props) {
   console.log("props items",props.items);
   let dateStr;

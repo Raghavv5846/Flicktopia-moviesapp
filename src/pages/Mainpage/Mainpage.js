@@ -1,24 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import Navbar from './Navbar'
-import Searchbar from './Searchbar'
+import Navbar from '../../components/Navbar'
+import Searchbar from '../../components/Searchbar'
 import { Link } from 'react-router-dom'
-import Loader from './loader'
-import Movieitems from './Movieitems'
-import Showitems from './Showitems'
+import Loader from '../../components/loader'
+import Movieitems from '../../components/Movieitems'
+import Showitems from '../../components/Showitems'
 import axios from 'axios'
-import '../styles/input.css'
-import '../styles/moviepage.css'
-import '../styles/searched.css'
-import {MoviesContext} from '../context/MoviesContext'
-import { UserContext } from '../context/UserContext'
+import '../../styles/input.css'
+import '../../styles/moviepage.css'
+import '../../styles/searched.css'
+import {MoviesContext} from '../../context/MoviesContext'
+import { UserContext } from '../../context/UserContext'
 
 
 export const AuthContext=createContext();
 export default function Mainpage(props) {
-    const {loading}=useContext(UserContext);
-    const [loggedin,setLoggedin]=useState(false);
-    const [user,setUser]=useState(null);
-    
+
+    const {loggedin,user,loading}=useContext(UserContext);
     const {movItems,showItems}=useContext(MoviesContext);
     console.log(useContext(UserContext));
    
@@ -48,20 +46,7 @@ export default function Mainpage(props) {
     //             fetchshow();
                
     //           },[])
-    useEffect(()=>{
-        axios({url: "http://localhost:8000/protected",withCredentials: true,})
-            // Handle the response from backend here
-            .then((res) => {
-                
-                if(res.data.status==='success'){
-                    setLoggedin(true);
-                    setUser(res.data.user);
-                }
-            })
-            // Catch errors if any
-            .catch((err) => { });
 
-    },[]);
 
     if(loading){
         return 
@@ -82,7 +67,7 @@ export default function Mainpage(props) {
     <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)"}}className='main-movieItems'>
         {movItems.map((element)=>{
             return (
-                <Link className="col-md-2" key={element.id} to={`/movie/${element.id}`} state={{user,loggedin}}>
+                <Link className="col-md-2" key={element.id} to={`/movie/${element.id}`}>
             <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )
@@ -99,7 +84,7 @@ export default function Mainpage(props) {
     <div className='main-showItems'>
         {showItems.map((element)=>{ 
             return (
-                <Link  key={element.id}to={`/show/${element.id}`} state={{user,loggedin}} className="col-md-2">
+                <Link  key={element.id}to={`/show/${element.id}`} className="col-md-2">
                     <Showitems poster={element.poster_path} rating={element.vote_average} name={element.name} />
         </Link>
             )

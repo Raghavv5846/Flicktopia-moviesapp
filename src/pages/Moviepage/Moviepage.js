@@ -2,14 +2,14 @@ import React,{useEffect, useState,useRef, useContext} from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Youtube from 'react-youtube'
 import Moviepage2 from './Similar';
-import Movieitems from './Movieitems';
-import Loader from './loader';
-import '../styles/moviepage.css'
-import '../styles/showpage.css'
+import Movieitems from '../../components/Movieitems';
+import Loader from '../../components/loader';
+import '../../styles/moviepage.css'
+import '../../styles/showpage.css'
 import Moviepage3 from './Details';
-import Navbar from './Navbar';
+import Navbar from '../../components/Navbar';
 import axios from 'axios';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 
 export default function Moviepage(props) {
@@ -19,10 +19,18 @@ export default function Moviepage(props) {
     const [isSimilar,setIsSimilar]=useState(true);
     const [imdbdata,setImdbdata]=useState(null);
     const [selectedOption, setSelectedOption] = useState('similar');
-    const location = useLocation();
-    const propsFromLink = location;
-    const {user,loggedin}=propsFromLink.state;
-    console.log("propsFromLink",propsFromLink.state);
+    const {user,loggedin}=useContext(UserContext);
+    const [watchadded,setWatchadded]=useState(false);
+    const [adding,setAdding]=useState(false);
+    const [watchdata,setWatchdata]=useState({
+      id:'',
+      image:"",
+      name:"",
+      date:"",
+      rating:"",
+      type:"movie"
+    })
+    // console.log("propsFromLink",propsFromLink.state);
     const {id}=useParams();
     
     const handleOptionClick = (option) => {
@@ -33,6 +41,26 @@ export default function Moviepage(props) {
       }
       setSelectedOption(option);
     };
+    useEffect(() => {
+      if(user){
+        axios({
+          url: `${process.env.REACT_APP_HOST}/checklist`,withCredentials: true,method:"post",
+          data: {id},
+        })
+        .then((res) => {
+          if(res.data.status==='included'){
+            setWatchadded(true);
+          }
+        })
+        
+        // Catch errors if any
+        .catch((err) => { });
+        
+      }
+      
+    }, [adding])
+    
+    
     useEffect(()=>{
       const fetchMoviePage = async () => {
         try {
@@ -42,6 +70,14 @@ export default function Moviepage(props) {
           );
           const data = await response.json();
           setmovdata(data);
+          setWatchdata({
+            id:data.id,
+            image:data.poster_path,
+            name:data.title,
+            date:data.release_date,
+            rating:data.vote_average,
+            type:"movie"
+          })
           
         } catch (err) {
           console.log(err);
@@ -91,26 +127,33 @@ export default function Moviepage(props) {
     //     }  
     //    };
     const opts = {
-        height: "100%",  
-   width: "100%",  
-   controls: "1"
-      };
+      height: "100%",  
+      width: "100%",  
+      controls: "1"
+    };
     
-  const handleWatch = ()=>{
-if(user){
-  console.log(user);
-    axios({
-        url: "http://localhost:8000/add",withCredentials: true,
-        method: "POST",
-        data: {id},
+    const handleWatch = ()=>{
+      if(user){
+        setAdding(true);
+        console.log(user);
+        axios({
+          url: `${process.env.REACT_APP_HOST}/add`,withCredentials: true,
+          method: "POST",
+          data: watchdata,
     
-    })
+        })
         .then((res) => {console.log(res);})
-    
+        
         // Catch errors if any
-        .catch((err) => { });
-  }
-  }
+        .catch((err) => { })
+        .finally(() => {
+          setAdding(false);
+          console.log("Adding completed. adding value:", adding);
+        });
+        
+      }
+    }
+    
   console.log(id);
   console.log(user,loggedin,"Jiiiiiiiiiiiiiiiiii");
 
@@ -118,7 +161,6 @@ if(user){
     
       setIsFullScreen(true);
 }
-
 
   return (
     <>
@@ -169,12 +211,28 @@ if(user){
             Watch Trailer
             </button>
             </div>
-            {user ?
+            {user ? 
+             (!watchadded ?
+               (adding ? 
+                <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer'>
+            <Loader/>
+            </button>
+            </div>
+            :
             <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
               <button onClick={handleWatch} className='trailer'>
             Add to Watchlist
             </button>
             </div>
+               )
+            :
+            <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
+              <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
+              Already added
+            </button>
+            </div>
+             )
             :
             <div style={{display:"flex",zIndex:"3",marginTop:"25px"}} >
               <button onClick={handleWatch} className='trailer' disabled style={{opacity:"0.5"}}> 
@@ -201,7 +259,7 @@ if(user){
         : <Moviepage3 items={movdata} data="movie"/>
         )
         : 
-        <Loader/>
+        ""
 }
  
 </>

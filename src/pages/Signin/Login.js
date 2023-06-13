@@ -1,10 +1,10 @@
 import React,{useContext, useEffect,useState} from 'react'
-import '../styles/signin.css'
-import Navbar from './Navbar';
-import '../styles/navbar.css'
+import '../../styles/signin.css'
+import Navbar from '../../components/Navbar';
+import '../../styles/navbar.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 
 export default function Signin() {
@@ -37,7 +37,7 @@ export default function Signin() {
         }) 
         // useEffect(()=>{
             useEffect(()=>{
-                axios({url: "http://localhost:8000/protected",withCredentials: true,})
+                axios({url: `${process.env.REACT_APP_HOST}/protected`,withCredentials: true,})
                     // Handle the response from backend here
                     .then((res) => {
                         console.log(res.data);
@@ -93,7 +93,7 @@ export default function Signin() {
             <div className="form login">
                 <div className="form-content">
                     <header>Login</header>
-                    <form action="http://localhost:8000/sign-in/create-session" method='post' onSubmit={handleFormSubmit}>
+                    <form action={`${process.env.REACT_APP_HOST}/sign-in/create-session`} method='post' onSubmit={handleFormSubmit}>
                         <div className="field input-field">
                             <input type="email" placeholder="Email" className="input" name='email' onChange={handleChange}/>
                         </div>

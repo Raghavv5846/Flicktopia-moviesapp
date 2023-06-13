@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import '../styles/signin.css'
-import Navbar from './Navbar';
-import '../styles/navbar.css';
+import '../../styles/signin.css'
+import Navbar from '../../components/Navbar';
+import '../../styles/navbar.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export default function Signup() {
         confirm_password:''
     })
     useEffect(()=>{
-        axios({url: "http://localhost:8000/protected",withCredentials: true,})
+        axios({url: `${process.env.REACT_APP_HOST}/protected`,withCredentials: true,})
             // Handle the response from backend here
             .then((res) => {
                 console.log(res.data);
@@ -52,7 +52,7 @@ export default function Signup() {
             const handleSubmit=(e)=>{
                 e.preventDefault();
                 axios({
-                    url: "http://localhost:8000/sign-in/create",
+                    url: `${process.env.REACT_APP_HOST}/sign-in/create`,
                     method: "POST",
                     headers: {
          
@@ -93,7 +93,7 @@ return (
             <div className="form signup">
                 <div className="form-content">
                     <header>Signup</header>
-                    <form action="http://localhost:8000/sign-in/create" method='post' onSubmit={handleSubmit}>
+                    <form action={`${process.env.REACT_APP_HOST}/sign-in/create`} method='post' onSubmit={handleSubmit}>
                     <div className="field input-field">
                             <input type="text" placeholder="Name" className="input" name='name' value={formData.name} onChange={handleChange}/>
                         </div>

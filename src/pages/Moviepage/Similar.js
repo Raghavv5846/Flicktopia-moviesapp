@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Movieitems from './Movieitems'
+import Movieitems from '../../components/Movieitems'
 import { Link } from 'react-router-dom';
-
+import '../../styles/moviepage.css'
 export default function Moviepage2(props) {
    
   return (

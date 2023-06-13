@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import Movieitems from './Movieitems';
-import Loader from './loader';
+import Movieitems from '../../components/Movieitems';
+import Loader from '../../components/loader';
 import LazyLoad from 'react-lazy-load';
 import InfiniteScroll from 'react-infinite-scroller';
-export default function Mainshowpage2(props) {
-    var option=['Airing Today','On the Air','Popular','Top Rated'];
-    const [opted,setOpted]=useState("airing_today");
+
+export default function Mainmoviepage2(props) {
+    var option=['Now Playing','Popular','Top Rated','Upcoming'];
+    const [opted,setOpted]=useState("now_playing");
     const [data,setData]=useState(null);
     const [loading,setLoading]=useState(false);
     const [input,setInput]=useState("");
@@ -47,23 +48,23 @@ export default function Mainshowpage2(props) {
         console.log("selected",typeof selected);
 
         if(selected===0){
-            setOpted("airing_today")
+            setOpted("now_playing")
         }
         else if(selected===1){
-            setOpted('on_the_air')
-        }
-        else if(selected===2){
             setOpted('popular')
         }
-        else if(selected===3){
+        else if(selected===2){
             setOpted('top_rated')
+        }
+        else if(selected===3){
+            setOpted('upcoming')
         }
     }
     useEffect(()=>{
         const fetchmovie=async ()=>{
             try {
                 setLoading(true);
-              const response= await fetch(`https://api.themoviedb.org/3/tv/${opted}?language=en-US&page=1`, props.options)
+              const response= await fetch(`https://api.themoviedb.org/3/movie/${opted}?language=en-US&page=1`, props.options)
               const data=await response.json();
               
               setData(data.results);
@@ -77,7 +78,7 @@ export default function Mainshowpage2(props) {
     },[opted])
     const fetchmore=async ()=>{
         try{
-            const response= await fetch(`https://api.themoviedb.org/3/tv/${opted}?language=en-US&page=${page}`, props.options)
+            const response= await fetch(`https://api.themoviedb.org/3/movie/${opted}?language=en-US&page=${page}`, props.options)
               const datarec=await response.json();
               
               setData(data.concat(datarec.results));
@@ -102,9 +103,9 @@ export default function Mainshowpage2(props) {
 <h2 style={{marginTop:"2rem",padding:"1rem",background:"black",color:'white'}}>{selectedOptionText}</h2>
                         </div>
 <div style={{position:"relative",marginRight:"10%"}}>
-<svg className="icon" style={{top:"1rem"}} aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+<svg class="icon" style={{top:"1rem"}} aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
 
-<input placeholder="Search" type="search" className="input" value={input} onChange={handleChange} style={{border:"1px solid"}}/>
+<input placeholder="Search" type="search" class="input" value={input} onChange={handleChange} style={{border:"1px solid"}}/>
 <div className='searched'>
       { sdata ? 
       loading ? <Loader/> :
@@ -140,7 +141,7 @@ export default function Mainshowpage2(props) {
         <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",overflow:"hidden"}}className='main-movieItems'>
         {data.map((element,index)=>{
             return (
-                <Link className="col-md-2" key={index} style={{padding:"15px"}} to={`/show/${element.id}`}>
+                <Link className="col-md-2" key={index} style={{padding:"15px"}} to={`/movie/${element.id}`}>
                     <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )

@@ -1,34 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { MoviesContext } from '../context/MoviesContext';
-import '../styles/moviepage.css'
-import Mainmoviepage2 from './Mainmoviepage2';
-import Navbar from './Navbar';
-import { useLocation } from 'react-router';
+import { MoviesContext } from '../../context/MoviesContext';
+import Navbar from '../../components/Navbar';
+import Mainmoviepage2 from '../Mainmoviepage/Mainmoviepage2';
+import Mainshowpage2 from './Mainshowpage2';
 
-export default function Mainmoviepage(props) {
+export default function Mainshowpage(props) {
     const {movItems,showItems}=useContext(MoviesContext);
     const [activeIndex, setActiveIndex] = useState(0);
-    const propsFromLink=useLocation();
-    console.log(propsFromLink,"moviepgae");
+
     useEffect(() => {
       const interval = setInterval(() => {
-        setActiveIndex((prevIndex) => (prevIndex + 1) % movItems.length);
+        setActiveIndex((prevIndex) => (prevIndex + 1) % showItems.length);
       }, 10000);
   
       return () => clearInterval(interval);
-    }, [movItems.length]);
+    }, [showItems.length]);
   return (
     <>
     <Navbar/>
     <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{position:"relative",zIndex:"0"}}>
   <div className="carousel-inner" data-bs-interval="10000">
-  {movItems.map((path, index) => (
+  {showItems.map((path, index) => (
     <>
         <div className={`carousel-item ${index === activeIndex ? 'active' : ''}`} key={index}>
           <img src={`https://image.tmdb.org/t/p/original${path.backdrop_path}`} className="d-block w-100" alt="" />
             <div className='movieDetails'>
-        <h1 style={{fontSize:"3rem"}} >{path.title}</h1>
-            <h5 style={{color:"white"}}>movie</h5>
+        <h1 style={{fontSize:"3rem"}} >{path.name}</h1>
+            <h5 style={{color:"white"}}>tv</h5>
             <h3>{path.overview}</h3>
             <h2>Details</h2>
             </div>
@@ -47,7 +45,8 @@ export default function Mainmoviepage(props) {
     <span className="visually-hidden">Next</span>
   </button>
 </div>
-<Mainmoviepage2 options={props.options}/>
+<Mainshowpage2 options={props.options}/>
 </>
   )
 }
+
