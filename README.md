@@ -1,5 +1,4 @@
-Site Link: https://flicktopia-moviesapp.vercel.app/movie/414906
-
+Site Link: https://flicktopia-moviesapp.vercel.app/
 
 # Getting Started with Create React App
 
