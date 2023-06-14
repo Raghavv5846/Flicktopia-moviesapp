@@ -4,6 +4,8 @@ import Movieitems from '../../components/Movieitems';
 import Loader from '../../components/loader';
 import LazyLoad from 'react-lazy-load';
 import InfiniteScroll from 'react-infinite-scroller';
+import '../../styles/moviepage.css'
+import '../../styles/searched.css'
 
 export default function Mainmoviepage2(props) {
     var option=['Now Playing','Popular','Top Rated','Upcoming'];
@@ -90,20 +92,20 @@ export default function Mainmoviepage2(props) {
     }
   return (
     <>
-    <div style={{height:"8vw",display:"flex",alignItems:"center",justifyContent:"space-between"}} >
-        <div style={{marginLeft:'10%',height:"5vw"}}>
+    <div  className='sec-2' >
+        <div  className='sec-2-1'>
 
-    <select style={{width:"200px",height:"30px",fontSize:"20px"}} onChange={handleSelect} >
+    <select onChange={handleSelect} >
         {option.map((option, index) => (
             <option key={index} value={option}>
                             {option}
                             </option>
                         ))}
 </select>
-<h2 style={{marginTop:"2rem",padding:"1rem",background:"black",color:'white'}}>{selectedOptionText}</h2>
+<h2 style={{marginTop:"2rem",padding:"1rem",background:"black",color:'white',fontSize:"10px"}}>{selectedOptionText}</h2>
                         </div>
-<div style={{position:"relative",marginRight:"10%"}}>
-<svg class="icon" style={{top:"1rem"}} aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+<div  className='sec-2-2' >
+<svg className="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
 
 <input placeholder="Search" type="search" class="input" value={input} onChange={handleChange} style={{border:"1px solid"}}/>
 <div className='searched'>
@@ -141,7 +143,7 @@ export default function Mainmoviepage2(props) {
         <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",overflow:"hidden"}}className='main-movieItems'>
         {data.map((element,index)=>{
             return (
-                <Link className="col-md-2" key={index} style={{padding:"15px"}} to={`/movie/${element.id}`}>
+                <Link className="col-md-2" key={index} style={{padding:"5px"}} to={`/movie/${element.id}`}>
                     <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )

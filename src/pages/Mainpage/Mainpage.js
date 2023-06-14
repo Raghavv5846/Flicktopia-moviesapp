@@ -59,7 +59,7 @@ export default function Mainpage(props) {
     <Navbar logged={loggedin} user={user}/>
     <Searchbar options={props.options} movies={movItems}/>
     <div className='d-flex align-items-center justify-content-center' style={{height:"10rem"}}>
-        <div className='bg-dark' style={{color:"white",padding:"10px"}}>
+        <div className='bg-dark' style={{color:"white",padding:"10px",margin:"auto"}}>
     <h3 >Trending Movies</h3>
         </div>
     </div>
@@ -76,7 +76,7 @@ export default function Mainpage(props) {
     : <Loader/>
 }
     <div className='d-flex align-items-center justify-content-center' style={{height:"10rem"}}>
-        <div className='bg-dark' style={{color:"white",padding:"10px"}}>
+        <div className='bg-dark' style={{color:"white",padding:"10px",margin:"top"}}>
     <h3 >Trending Shows</h3>
         </div>
     </div>

@@ -1,13 +1,13 @@
 import React from 'react'
 
 export default function Episodes(props) {
-    
+    console.log(props,"detailsssssssssss");
   return (
-    <div style={{display:'flex',padding:"4rem 0rem 2rem 4rem",gap:"2rem"}} className='p-xxl-5 season-episodes'>
+    <div  className='p-xxl-5 season-episodes' style={props.type==='details' ? {padding:"0"}:{}}>
         <div>
-            <img style={{height:"250px",width:"350px",borderRadius:"5px"}} src={`https://image.tmdb.org/t/p/original${props.items.still_path}`}/>
+            <img className='epi-img'  src={`https://image.tmdb.org/t/p/original${props.items.still_path}`}/>
         </div>
-        <div>
+        <div className='epi-content'>
             <h1 style={{fontWeight:"800"}}>S{props.items.season_number} E{props.items.episode_number}-{props.items.name}</h1>
             <div style={{display:"flex",gap:"1rem",fontSize:"1.2rem",fontWeight:"200"}}>
             <h4>Aired on : {props.items.air_date}</h4>

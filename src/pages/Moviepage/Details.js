@@ -53,19 +53,18 @@ if(props.data==='movie'){
         <h1>
           Cast and Crew
         </h1>
-        <div className="row align-items-center p-xl-3">
+        <div className="row align-items-center p-xl-3 cast-section">
         {props.items.credits.cast.slice(0,10).map((element)=>{
           return (
-            <Link className="col-md-2" key={element.id} style={{padding:"15px"}} to={`/movie/${element.id}`} state={{id:element.id}}>
             <Castcard name={element.name} character={element.character} poster={element.profile_path}/>
-        </Link>
+        
             )
         })}
         </div>
       </div>
       <div>
         <h1>Languages</h1>
-        <div style={{display:"flex",gap:"1rem"}}> 
+        <div style={{display:"flex",gap:"1rem",flexWrap:"wrap"}}> 
         {props.items.spoken_languages.map((element)=>{
           return (
             <h3>{element.english_name}</h3>
@@ -104,16 +103,15 @@ if(props.data==='movie'){
             </div>
             <div>
               <h1>Last Episode</h1>
-              <Episodes items={props.items.last_episode_to_air} />
+              <Episodes items={props.items.last_episode_to_air} type="details"/>
             </div>
             <div>
               <h1>Directors</h1>
               <div style={{display:"flex",gap:"2rem"}}>
               {props.items.created_by.map((element)=>{
-                  return (
-                    <Link className="col-md-2" key={element.id} style={{padding:"15px"}} to={`/movie/${element.id}`} >
+                  return (    
                       <Castcard name={element.name} character="" poster={element.profile_path}/>
-                  </Link>
+                
                   )
                 })}
                 </div>
@@ -123,7 +121,7 @@ if(props.data==='movie'){
               <h1>
                 Cast and Crew
               </h1>
-              <div className="row align-items-center p-xl-3">
+              <div className="row align-items-center p-xl-3 cast-section">
               {props.items.credits.cast.slice(0,10).map((element)=>{
                 return (
                 <Link className="col-md-2" key={element.id} style={{padding:"15px"}} to={`/movie/${element.id}`} state={{id:element.id}}>
@@ -135,7 +133,7 @@ if(props.data==='movie'){
             </div>
             <div>
               <h1>Languages</h1>
-              <div style={{display:"flex",gap:"1rem"}}> 
+              <div style={{display:"flex",gap:"1rem",flexWrap:"wrap"}}> 
               {props.items.spoken_languages.map((element)=>{
                 return (
                   <h3>{element.english_name}</h3>

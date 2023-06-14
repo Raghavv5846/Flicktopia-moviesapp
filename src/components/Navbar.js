@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css'
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-
+import $ from 'jquery'
 export default function Navbar(props) {
     const navigate = useNavigate();
     const {user,loggedin}=useContext(UserContext);
@@ -19,6 +19,13 @@ export default function Navbar(props) {
         })
         // Catch errors if any
         .catch((err) => {console.log(err); }); 
+    }
+    const handleClick=(e)=>{
+        $('.navTrigger').toggleClass('active');
+        console.log("Clicked menu");
+        $("#mainListDiv").toggleClass("show_list");
+        $("#mainListDiv").fadeIn();
+
     }
   return (
     <>
@@ -48,7 +55,7 @@ export default function Navbar(props) {
                 }
                 </ul>
             </div>
-            <span className="navTrigger">
+            <span className="navTrigger" onClick={handleClick}>
                 <i></i>
                 <i></i>
                 <i></i>

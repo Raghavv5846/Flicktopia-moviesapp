@@ -15,7 +15,7 @@ export default function Showsimilar(props) {
     <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",background:"black"}}>
         { props.items ? props.items.similar.results.slice(0,20).map((element)=>{
             return (
-                <Link key={element.id} style={{padding:"15px"}} to={`/show/${element.id}`} state={{id:element.id}} preventScrollReset={true}>
+                <Link key={element.id} style={{padding:"5px"}} to={`/show/${element.id}`} state={{id:element.id}} preventScrollReset={true}>
             <Showitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date} />
         </Link>
             )

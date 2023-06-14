@@ -4,7 +4,7 @@ import '../../styles/moviepage.css'
 import Mainmoviepage2 from './Mainmoviepage2';
 import Navbar from '../../components/Navbar';
 import { useLocation } from 'react-router';
-
+import '../../styles/searched.css'
 export default function Mainmoviepage(props) {
     const {movItems,showItems}=useContext(MoviesContext);
     const [activeIndex, setActiveIndex] = useState(0);

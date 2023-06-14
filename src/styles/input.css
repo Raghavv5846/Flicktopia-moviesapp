@@ -38,8 +38,54 @@
     fill: #9e9ea7;
     width: 2rem;
     height: 2rem;
+    top: 1rem;
    }
-   
+   .sec-2{
+    height: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+   }
+   .sec-2-1{
+    margin-left: 10%;
+    height: 5vw;
+   }
+   .sec-2-2{
+    position: relative;
+    margin-right: 10%;
+   }
+   @media screen and (max-width:768px) {
+    .sec-2-1{
+            height: inherit;
+    }
+    .sec-2-2{
+        margin-left: 10%;
+        margin-right: 0%;
+        margin-bottom: 14%;
+    }
+    .sec-2{
+        height: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+    .input{
+        width: 80%;
+        margin-top: 0rem;
+        height: 30px;
+        font-size: 12px;
+    }
+    .icon{
+        position: absolute;
+        left: 1rem;
+        fill: #9e9ea7;
+        width: 2rem;
+        height: 2rem;
+        top: 0.5rem;
+    }
+
+   }
    
    
    
