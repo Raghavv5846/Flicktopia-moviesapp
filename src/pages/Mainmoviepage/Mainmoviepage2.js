@@ -47,8 +47,6 @@ export default function Mainmoviepage2(props) {
     const selectedOptionText = selectedOption.innerText;
     setSelectedOptionText(selectedOptionText);
 
-        console.log("selected",typeof selected);
-
         if(selected===0){
             setOpted("now_playing")
         }
@@ -70,7 +68,7 @@ export default function Mainmoviepage2(props) {
               const data=await response.json();
               
               setData(data.results);
-              console.log("dataaa",data);
+              
               setLoading(false);
             } catch (err) {
               console.log(err);
@@ -84,7 +82,7 @@ export default function Mainmoviepage2(props) {
               const datarec=await response.json();
               
               setData(data.concat(datarec.results));
-              console.log("dataaa",data);
+            
         
         }catch(err){
             console.log(err);
@@ -112,7 +110,6 @@ export default function Mainmoviepage2(props) {
       { sdata ? 
       loading ? <Loader/> :
       sdata.slice(0,20).map((element)=>{
-          {console.log("you data has been ",loading)}
           if(element.title || element.name){
               return(  
                   <Link key={element.id} className='searchItems' to={element.media_type==='movie' ? `/movie/${element.id}` : `/show/${element.id}`} state={{id:`${element.id}`}}>

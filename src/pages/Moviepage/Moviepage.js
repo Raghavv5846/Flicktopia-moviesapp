@@ -30,7 +30,6 @@ export default function Moviepage(props) {
       rating:"",
       type:"movie"
     })
-    // console.log("propsFromLink",propsFromLink.state);
     const {id}=useParams();
     
     const handleOptionClick = (option) => {
@@ -135,27 +134,23 @@ export default function Moviepage(props) {
     const handleWatch = ()=>{
       if(user){
         setAdding(true);
-        console.log(user);
         axios({
           url: `${process.env.REACT_APP_HOST}/add`,withCredentials: true,
           method: "POST",
           data: watchdata,
     
         })
-        .then((res) => {console.log(res);})
+        .then((res) => {})
         
         // Catch errors if any
         .catch((err) => { })
         .finally(() => {
           setAdding(false);
-          console.log("Adding completed. adding value:", adding);
         });
         
       }
     }
     
-  console.log(id);
-  console.log(user,loggedin,"Jiiiiiiiiiiiiiiiiii");
 
   const handleFullScreen = () => {
     

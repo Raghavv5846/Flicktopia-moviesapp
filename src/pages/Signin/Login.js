@@ -40,7 +40,6 @@ export default function Signin() {
                 axios({url: `${process.env.REACT_APP_HOST}/protected`,withCredentials: true,})
                     // Handle the response from backend here
                     .then((res) => {
-                        console.log(res.data);
                         if(res.data.status==='success'){
                             navigate('/');
                         }

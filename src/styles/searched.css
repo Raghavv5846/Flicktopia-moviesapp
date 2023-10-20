@@ -1,10 +1,9 @@
 .sactive{
-    position: absolute;
-    content: "";
+    position: relative;
     height: 30rem;
     width: 25rem;
     z-index: 2;
-    top: 5rem;
+    top: 5px;
     background: white;
     overflow-x: auto;
 }

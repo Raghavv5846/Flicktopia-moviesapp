@@ -44,7 +44,6 @@ export default function Mainshowpage2(props) {
     const selectedOptionText = selectedOption.innerText;
     setSelectedOptionText(selectedOptionText);
 
-        console.log("selected",typeof selected);
 
         if(selected===0){
             setOpted("airing_today")
@@ -67,7 +66,6 @@ export default function Mainshowpage2(props) {
               const data=await response.json();
               
               setData(data.results);
-              console.log("dataaa",data);
               setLoading(false);
             } catch (err) {
               console.log(err);
@@ -81,7 +79,6 @@ export default function Mainshowpage2(props) {
               const datarec=await response.json();
               
               setData(data.concat(datarec.results));
-              console.log("dataaa",data);
         
         }catch(err){
             console.log(err);
@@ -109,7 +106,6 @@ export default function Mainshowpage2(props) {
       { sdata ? 
       loading ? <Loader/> :
       sdata.slice(0,20).map((element)=>{
-          {console.log("you data has been ",loading)}
           if(element.title || element.name){
               return(  
                   <Link key={element.id} className='searchItems' to={element.media_type==='movie' ? `/movie/${element.id}` : `/show/${element.id}`} state={{id:`${element.id}`}}>
@@ -137,10 +133,10 @@ export default function Mainshowpage2(props) {
     hasMore={data.length!==100}
     loader={<Loader/>}
     >
-        <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",overflow:"hidden"}}className='main-movieItems'>
+        <div style={{overflow:"hidden"}} className='row justify-content-center align-align-items-center g-2'>
         {data.map((element,index)=>{
             return (
-                <Link className="col-md-2" key={index} style={{padding:"15px"}} to={`/show/${element.id}`}>
+                <Link className="col-md-2 col-sm-4 col-4" key={index} style={{padding:"15px"}} to={`/show/${element.id}`}>
                     <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )

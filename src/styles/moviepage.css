@@ -129,9 +129,6 @@
   .LazyLoad{
     height: inherit;
   }
-  .col-md-2{
-    padding: 15px;
-  }
   .btn{
     display: flex;
     gap: 3rem;
@@ -147,10 +144,7 @@
     z-index:3;
     cursor:pointer
   }
-  .similar{
-    display: grid;
-      grid-template-columns: repeat(5,1fr);
-    
+  .similar{    
     background: black;
   }
   select{
@@ -167,8 +161,7 @@
     grid-template-columns: repeat(5,1fr);
     }
     .card{
-      height: 100px;
-      width: inherit;
+      height: 15rem;
     }
     .main-movieItems{
       display: grid;
@@ -192,21 +185,13 @@
     .trailer{
       font-size: 9px;
     }
-    .similar{
-      display: grid;
-      grid-template-columns: repeat(5,1fr);
-      gap: 0rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
+
     select{
       width: 100px;
       height: 30px;
       font-size: 10px;
       margin-top: 1rem;
     }
-    .input{
-      width: 50%;
-    }
+
   }
   

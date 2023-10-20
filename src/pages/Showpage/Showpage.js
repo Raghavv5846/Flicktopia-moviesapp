@@ -32,10 +32,8 @@ export default function Showpage(props) {
     })
     
     const {id}=useParams();
-    // console.log(props.items);
   
     const handleSelectChange = (event) => {
-        // console.log("epidoesssssss",(event.target.value.innerText));
 
         const selectedOption = event.target.options[event.target.selectedIndex];
     const selectedOptionText = selectedOption.innerText;
@@ -97,7 +95,6 @@ export default function Showpage(props) {
             );
             const data = await response.json();
             setEpisode(data);
-            console.log("episode",episode);
           } catch (err) {
             console.log(err);
           }
@@ -107,20 +104,18 @@ export default function Showpage(props) {
       const handleWatch = ()=>{
         if(user){
           setAdding(true);
-          console.log(user);
           axios({
             url: `${process.env.REACT_APP_HOST}/add`,withCredentials: true,
             method: "POST",
             data: watchdata,
       
           })
-          .then((res) => {console.log(res);})
+          .then((res) => {})
           
           // Catch errors if any
           .catch((err) => { })
           .finally(() => {
             setAdding(false);
-            console.log("Adding completed. adding value:", adding);
           });
           
         }

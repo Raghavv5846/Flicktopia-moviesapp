@@ -9,44 +9,29 @@ import axios from 'axios'
 import '../../styles/input.css'
 import '../../styles/moviepage.css'
 import '../../styles/searched.css'
-import {MoviesContext} from '../../context/MoviesContext'
+// import {MoviesContext} from '../../context/MoviesContext'
 import { UserContext } from '../../context/UserContext'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { maindata } from '../../operations/maindata'
+import { movItems, showItems } from '../../slices/dataslices'
 
 export const AuthContext=createContext();
 export default function Mainpage(props) {
 
-    const {loggedin,user,loading}=useContext(UserContext);
-    const {movItems,showItems}=useContext(MoviesContext);
-    console.log(useContext(UserContext));
-   
-    // useEffect(() => {
-    //     const fetchmovie=async ()=>{
-    //       try {
-    //         const response= await fetch('https://api.themoviedb.org/3/trending/movie/week?language=en-US', props.options)
-    //         const data=await response.json();
-            
-    //         setMovitems(data.results);
-    //       } catch (err) {
-    //         console.log(err);
-    //               }
-    //           }   
-      
-    //         const fetchshow=async ()=>{
-    //           try {
-    //             const response= await fetch('https://api.themoviedb.org/3/trending/tv/week?language=en-US', props.options)
-    //             const data=await response.json();
-                
-    //             setShowitems(data.results);
-    //           } catch (err) {
-    //             console.log(err);
-    //           }
-    //         }   
-    //             fetchmovie();
-    //             fetchshow();
-               
-    //           },[])
+    const {loggedin,user}=useContext(UserContext);
+    // const {movItems,showItems}=useContext(MoviesContext);
+    const dispatch=useDispatch();
+    const {movItems,showItems,loading}=useSelector((state)=>state.maindata);
+    // const showItems=useSelector(showItems);
 
+    useEffect(() => {
+        // console.log(loading,"hiii");
+        dispatch(maindata());
+        
+    }, [loading])
+    
 
     if(loading){
         return 
@@ -64,10 +49,10 @@ export default function Mainpage(props) {
         </div>
     </div>
     {movItems ? 
-    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)"}}className='main-movieItems'>
+    <div className='row g-2 justify-content-center align-items-center'>
         {movItems.map((element)=>{
             return (
-                <Link className="col-md-2" key={element.id} to={`/movie/${element.id}`}>
+                <Link className="col-md-2 col-sm-3 col-3" key={element.id} to={`/movie/${element.id}`}>
             <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date}/>
         </Link>
             )
@@ -81,10 +66,10 @@ export default function Mainpage(props) {
         </div>
     </div>
     {showItems ? 
-    <div className='main-showItems'>
+    <div className='row g-2 justify-content-center align-items-center'>
         {showItems.map((element)=>{ 
             return (
-                <Link  key={element.id}to={`/show/${element.id}`} className="col-md-2">
+                <Link  key={element.id}to={`/show/${element.id}`} className="col-md-2 col-sm-3 col-3">
                     <Showitems poster={element.poster_path} rating={element.vote_average} name={element.name} />
         </Link>
             )
@@ -92,7 +77,6 @@ export default function Mainpage(props) {
     </div>
     : <Loader/>
 }
-
         </>
   )
 }

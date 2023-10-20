@@ -4,6 +4,8 @@ import '../styles/navbar.css'
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import $ from 'jquery'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Navbar(props) {
     const navigate = useNavigate();
     const {user,loggedin}=useContext(UserContext);
@@ -22,7 +24,6 @@ export default function Navbar(props) {
     }
     const handleClick=(e)=>{
         $('.navTrigger').toggleClass('active');
-        console.log("Clicked menu");
         $("#mainListDiv").toggleClass("show_list");
         $("#mainListDiv").fadeIn();
 
@@ -43,7 +44,7 @@ export default function Navbar(props) {
                     {loggedin ?
                     <>
                     <li><Link to="/watchlist">Watchlist</Link></li>
-                    <li><Link to="/sign-in">{user}</Link></li>
+                    <li><Link to="/" >{user}</Link></li>
                     <li><Link to="/logout" onClick={handleLogout}>logout</Link></li>
 
                     </>
@@ -62,7 +63,7 @@ export default function Navbar(props) {
             </span>
         </div>
     </nav>
-    
+    <ToastContainer/>
     </>
   )
 }

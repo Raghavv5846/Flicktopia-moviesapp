@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Episodes(props) {
-    console.log(props,"detailsssssssssss");
   return (
     <div  className='p-xxl-5 season-episodes' style={props.type==='details' ? {padding:"0"}:{}}>
         <div>

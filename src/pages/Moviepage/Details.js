@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import '../../styles/details.css'
 import Episodes from '../Showpage/Episodes';
 export default function Moviepage3(props) {
-  console.log("props items",props.items);
   let dateStr;
   if(props.data==='tv'){
     dateStr = props.items.first_air_date;
@@ -29,7 +28,6 @@ export default function Moviepage3(props) {
     // Concatenate the day, month, and year
     const formattedDate = `${day} ${month} ${year}`;
 
-console.log(formattedDate);
 if(props.data==='movie'){
   return (
     <div style={{padding:"3rem"}} className='detailspage'>

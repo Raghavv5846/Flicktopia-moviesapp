@@ -3,9 +3,12 @@ import { MoviesContext } from '../../context/MoviesContext';
 import Navbar from '../../components/Navbar';
 import Mainmoviepage2 from '../Mainmoviepage/Mainmoviepage2';
 import Mainshowpage2 from './Mainshowpage2';
+import { useSelector } from 'react-redux';
 
 export default function Mainshowpage(props) {
-    const {movItems,showItems}=useContext(MoviesContext);
+  const {movItems,showItems}=useSelector((state)=>state.maindata);
+
+    // const {movItems,showItems}=useContext(MoviesContext);
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => {

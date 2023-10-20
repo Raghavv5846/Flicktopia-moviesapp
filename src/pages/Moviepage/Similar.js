@@ -13,10 +13,10 @@ export default function Moviepage2(props) {
         You Should not miss ......
     </h1>
     </div>
-    <div className="similar">
+    <div className="similar row g-2 justify-content-center align-items-center">
         { props.items ? props.items.similar.results.slice(0,20).map((element)=>{
             return (
-                <Link className="col-md-2" key={element.id} to={`/movie/${element.id}`} state={{id:element.id}} preventScrollReset={true}>
+                <Link className="col-md-2 col-sm-4 col-4" key={element.id} to={`/movie/${element.id}`} state={{id:element.id}} preventScrollReset={true}>
             <Movieitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date} />
         </Link>
             )

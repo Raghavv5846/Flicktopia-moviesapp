@@ -1,20 +1,19 @@
 import React from 'react'
 import LazyLoad from 'react-lazy-load'
 export default function Showitems(props) {
-    // console.log(props.poster);
   return (
     <>
      <div className="card">
   <div className="content">
     <div className="back">
-        <LazyLoad offset={50} onContentVisible={() => {console.log('loaded!')}}>
+        <LazyLoad offset={50}>
            <img src={`https://image.tmdb.org/t/p/original${props.poster}`} style={{height:"inherit",width:"inherit"}}/>
         </LazyLoad>
       </div>
     <div className="front">
       
       <div className="img">
-      <LazyLoad offset={50} onContentVisible={() => {console.log('loaded!')}}>
+      <LazyLoad offset={50}>
            <img src={`https://image.tmdb.org/t/p/original${props.poster}`} style={{height:"inherit",width:"inherit"}}/>
         </LazyLoad>
         <div className="circle">

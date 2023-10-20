@@ -2,9 +2,7 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
 }
-.card{
-    margin-top: 20px;
-}
+
 .nav{
     padding-top: 0px;
 }

@@ -19,7 +19,6 @@ export default function Signup() {
         axios({url: `${process.env.REACT_APP_HOST}/protected`,withCredentials: true,})
             // Handle the response from backend here
             .then((res) => {
-                console.log(res.data);
                 if(res.data.status==='success'){
                     navigate('/');
                 }
@@ -72,7 +71,6 @@ export default function Signup() {
                 }
                 useEffect(()=>{
                     if(message==='right'){
-                        console.log("gggggggggggggggggggggggggg");
                         setIsRegistered(true);
                         navigate('/sign-in')
                     }
@@ -84,7 +82,6 @@ export default function Signup() {
                   [event.target.name]: event.target.value
                 });
               }; 
-              console.log(message);
 return (
     <>
     <Navbar/>

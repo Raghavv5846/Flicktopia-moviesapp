@@ -60,15 +60,17 @@ function Searchbar(props) {
         FlickTopia
       </h3>
     </div>
-    <div className="group" style={{zIndex:"1",position: "absolute",top:"40%",left: "50%",transform: "translate(-50%, -50%)"}}>
+    <div className="group" style={{zIndex:"1",position: "absolute",top:"40%"}}>
+      <div style={{margin:"auto"}}>
+
     {/* <Select options={options} /> */}
           <svg className="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
           <input placeholder="Search" type="search" className="input" value={input} onChange={handleChange}/>
-    <div className='searched'>
+          <div className='searched'>
       { data ? 
       loading ? <Loader/> :
       data.slice(0,20).map((element)=>{
-      {console.log("you data has been ",loading)}
+
         if(element.title || element.name){
           return(  
             <Link key={element.id} className='searchItems' to={element.media_type==='movie' ? `/movie/${element.id}` : `/show/${element.id}`} state={{id:`${element.id}`}}>
@@ -84,10 +86,12 @@ function Searchbar(props) {
               </Link>
             )
           }
-      }): 
-      ""}
+        }): 
+        ""}
+
+        </div>
     </div>
-    </div>
+        </div>
    
   <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
     <span className="carousel-control-prev-icon" aria-hidden="true"></span>

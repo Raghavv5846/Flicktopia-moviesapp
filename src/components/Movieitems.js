@@ -1,7 +1,6 @@
 import React from 'react'
 import LazyLoad from 'react-lazy-load'
 export default function Movieitems(props) {
-    // console.log(props.poster);
   return (
     <>
         <div className="card ">

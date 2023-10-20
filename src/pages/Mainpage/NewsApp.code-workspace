@@ -1,0 +1,37 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../data/NewsApp"
+		},
+		{
+			"path": "../../../../../theleadingbean"
+		},
+		{
+			"path": "../../../../../portfolio"
+		},
+		{
+			"path": "../../../../../WeatherApp"
+		},
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../../../../social-media"
+		},
+		{
+			"path": "../../../../../Striver SDE Sheet challenge"
+		},
+		{
+			"path": "../../../../../WebDev"
+		},
+		{
+			"path": "../../../../../../../Downloads/essential layout"
+		},
+		{
+			"path": "../../../../../WebDev/intershala/judgeclone"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "WebDev"
+	}
+}

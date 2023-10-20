@@ -14,7 +14,7 @@ import Mainmoviepage from './pages/Mainmoviepage/Mainmoviepage';
 import Mainshowpage from './pages/Mainshowpage/Mainshowpage';
 import Watchlist from './pages/Watchlist/Watchlist';
 import { UserContext } from './context/UserContext';
-
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   
@@ -54,8 +54,6 @@ function App() {
   //         fetchshow();
          
   //       },[])
-        const movItems=[];
-        const ShowItems=[];
         return (
           <>
           
@@ -71,6 +69,7 @@ function App() {
               <Route exact path='/shows/' element={<Mainshowpage options={options}/>}/>
               <Route exact path='/watchlist/' element={<Watchlist options={options}/>}/>
             </Routes>
+              <ToastContainer/>
           </Router>
           
     

@@ -17,7 +17,6 @@ const navigate = useNavigate();
         axios({url: `${process.env.REACT_APP_HOST}/list`,withCredentials: true,})
         // Handle the response from backend here
         .then((res) => {
-            console.log(res.data,"watchlist");
             setWatchlist(res.data.list);
         })
         // Catch errors if any

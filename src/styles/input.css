@@ -3,7 +3,7 @@
     line-height: 28px;
     align-items: center;
     position: relative;
-    width: 250px;
+    width: 100%;
    }
    
    .input {
@@ -33,12 +33,12 @@
    }
    
    .icon {
-    position: absolute;
+    position: relative;
     left: 1rem;
     fill: #9e9ea7;
     width: 2rem;
     height: 2rem;
-    top: 1rem;
+    top: 3.3rem;
    }
    .sec-2{
     height: 8vw;
@@ -77,12 +77,12 @@
         font-size: 12px;
     }
     .icon{
-        position: absolute;
-        left: 1rem;
+        position: relative;
+        left: 30px;
         fill: #9e9ea7;
         width: 2rem;
         height: 2rem;
-        top: 0.5rem;
+        top: 0px;
     }
 
    }

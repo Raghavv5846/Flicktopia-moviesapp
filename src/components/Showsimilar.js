@@ -12,10 +12,10 @@ export default function Showsimilar(props) {
         You Should also watch...
     </h3>
     </div>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",background:"black"}}>
+    <div style={{background:"black"}} className='row align-content-center justify-items-center g-2'>
         { props.items ? props.items.similar.results.slice(0,20).map((element)=>{
             return (
-                <Link key={element.id} style={{padding:"5px"}} to={`/show/${element.id}`} state={{id:element.id}} preventScrollReset={true}>
+                <Link key={element.id} style={{padding:"5px"}} to={`/show/${element.id}`} state={{id:element.id}} preventScrollReset={true} className='col-md-2 col-3 col-sm-3'>
             <Showitems poster={element.poster_path} rating={element.vote_average} name={element.original_title} date={element.release_date} />
         </Link>
             )

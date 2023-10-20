@@ -5,8 +5,11 @@ import Mainmoviepage2 from './Mainmoviepage2';
 import Navbar from '../../components/Navbar';
 import { useLocation } from 'react-router';
 import '../../styles/searched.css'
+import { useSelector } from 'react-redux';
 export default function Mainmoviepage(props) {
-    const {movItems,showItems}=useContext(MoviesContext);
+    // const {movItems,showItems}=useContext(MoviesContext);
+    const {movItems}=useSelector((state)=>state.maindata);
+
     const [activeIndex, setActiveIndex] = useState(0);
     const propsFromLink=useLocation();
     
