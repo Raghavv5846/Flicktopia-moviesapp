@@ -5,15 +5,17 @@ passport.use(new LocalStrategy({
     usernameField:'email',
     passReqToCallback: true
 },
-    async function(req, email,password,done){
+    async function(req, email,password,done,res){
         await User.findOne({email: email})
         .then((user)=>{
             
             // Check if the password matches the user's password.
             if (!user || user.password !== password) {
                 // Password does not match.
+                req.flash('error',"wrong credeentials")
                 console.log('Password mismatch');
-                return done(null, false);
+        
+                return  done(null,false,{ message: 'Incorrect username or password.'});
             }
             // Password matches.
             console.log('Login successful');
@@ -59,6 +61,7 @@ passport.checkAuthentication=function(req,res,next){
 passport.setAuthenticatedUser = function(req, res, next){
     if (req.isAuthenticated()){
         // req.user contains the current signed in user from the session cookie and we are just sending this to the locals for the views
+        console.log("hiii",req.user);
         res.locals.user = req.user;
     }
     next();
