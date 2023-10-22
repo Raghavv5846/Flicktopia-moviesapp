@@ -106,17 +106,6 @@ app.get('/logout',passport.checkAuthentication,async (req,res)=>{
     return res.send({status:"success"});
 })
 app.get('/protected',passport.checkAuthentication,async (req,res)=>{
-    const allowedOrigins = ['http://localhost:3000', 'https://flicktopia-moviesapp-l481yl8ct-raghavv5846.vercel.app/']; // Add your allowed origins here
-  const requestOrigin = req.get('origin');
- console.log(requestOrigin);
-  if (allowedOrigins.includes(requestOrigin)) {
-    res.setHeader('Access-Control-Allow-Origin', requestOrigin);
-  } else {
-    // Handle unauthorized origin
-    return res.status(403).send('Unauthorized origin');
-  }
-
-
     return res.send({user:res.locals.user.name,status:"success"})
 })
 app.post('/add',passport.checkAuthentication,async (req,res)=>{
