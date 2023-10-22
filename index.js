@@ -15,7 +15,7 @@ const middleware=require('./config/middleware');
 const cors=require('cors');
 app.use(cors({
     origin: function (origin, callback) {
-        const allowedOrigins = ['https://flicktopia-moviesapp.vercel.app',"http://localhost:3000"]; // Replace with the desired URL
+        const allowedOrigins = ['https://flicktopia-moviesapp-5puq30p95-raghavv5846.vercel.app',"http://localhost:3000"]; // Replace with the desired URL
         const isAllowed = allowedOrigins.includes(origin) || !origin;
         
         if (isAllowed) {
