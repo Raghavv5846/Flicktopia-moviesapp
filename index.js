@@ -48,7 +48,7 @@ app.use(cookieParser());
         resave:false,
         cookie:{
             maxAge:(1000*30*10*10),
-            httpOnly:false,
+            secure:true,
         },
         store: MongoStore.create(
             {
