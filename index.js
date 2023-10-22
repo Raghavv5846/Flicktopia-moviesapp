@@ -41,6 +41,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cookieParser());
 // console.log("cookie parser");
+app.set("trust proxy", 1);
+
     app.use(session({
         name:'flicktopia',
         secret:'blahsomething',
