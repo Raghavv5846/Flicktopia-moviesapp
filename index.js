@@ -44,7 +44,7 @@ app.use(cookieParser());
     app.use(session({
         name:'flicktopia',
         secret:'blahsomething',
-        saveUninitialized:false,
+        saveUninitialized:true,
         resave:false,
         cookie:{
             maxAge:(1000*30*10*10),
