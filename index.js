@@ -27,17 +27,17 @@ app.use(cors({
     credentials:true,
     
 }));
-// app.use((req, res, next) => {
-// // console.log(req.sessionID,"sessiosnsnsns");
+app.use((req, res, next) => {
+// console.log(req.sessionID,"sessiosnsnsns");
 
-//     res.header('Access-Control-Allow-Origin',);
-//     res.header(
-//       'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-PINGOTHER'
-//     );
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
-//     next();
-//   });
+    res.header('Access-Control-Allow-Origin',"https://flicktopia-moviesapp-5puq30p95-raghavv5846.vercel.app");
+    res.header(
+      'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization,  X-PINGOTHER'
+    );
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
+    next();
+  });
 app.use(express.json());
 app.use(cookieParser());
 // console.log("cookie parser");
