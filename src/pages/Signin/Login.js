@@ -5,6 +5,8 @@ import '../../styles/navbar.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { useDispatch } from 'react-redux';
+import { usersignin } from '../../operations/auth';
 
 
 export default function Signin() {
@@ -15,7 +17,8 @@ export default function Signin() {
     const [isRegistered, setIsRegistered] = useState(false);
     const navigate = useNavigate();
     const [message,setMessage]=useState("");
-    const {handleSubmit}=useContext(UserContext);
+    // const {handleSubmit}=useContext(UserContext);
+    const dispatch=useDispatch();
         const forms = document.querySelector(".forms");
         const pwShowHide = document.querySelectorAll(".eye-icon");
         const links = document.querySelectorAll(".link");
@@ -50,7 +53,7 @@ export default function Signin() {
             },[])
             const handleFormSubmit=(e)=>{
                 e.preventDefault();
-                handleSubmit(formData,navigate);
+                dispatch((usersignin(formData,navigate)));
             }
         // })
         // const handleSubmit=(e)=>{

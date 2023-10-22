@@ -16,11 +16,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { maindata } from '../../operations/maindata'
 import { movItems, showItems } from '../../slices/dataslices'
+import { checkProtected } from '../../operations/auth'
 
 export const AuthContext=createContext();
 export default function Mainpage(props) {
 
-    const {loggedin,user}=useContext(UserContext);
+    const user=useSelector((state)=> state.userdata.user);
+    const userloading=useSelector((state)=> state.userdata.userLoading);
+    const loggedin=useSelector((state)=> state.userdata.loggedin);
+    
     // const {movItems,showItems}=useContext(MoviesContext);
     const dispatch=useDispatch();
     const {movItems,showItems,loading}=useSelector((state)=>state.maindata);
@@ -29,8 +33,9 @@ export default function Mainpage(props) {
     useEffect(() => {
         // console.log(loading,"hiii");
         dispatch(maindata());
+        dispatch(checkProtected());
         
-    }, [loading])
+    }, [loading,user])
     
 
     if(loading){

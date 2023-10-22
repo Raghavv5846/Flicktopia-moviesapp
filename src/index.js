@@ -13,9 +13,9 @@ root.render(
     <>
   <Provider store={store}>
   
-    <UserContext>
+    
       <App />
-    </UserContext>
+   
   </Provider>
   </>
 );

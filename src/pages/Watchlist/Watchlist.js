@@ -6,10 +6,21 @@ import Movieitems from '../../components/Movieitems';
 import '../../styles/watchlist.css'
 import { UserContext } from '../../context/UserContext';
 import Showitems from '../../components/Showitems';
+import { useDispatch, useSelector } from 'react-redux';
+import { remove } from '../../operations/auth';
+import Loader from '../../components/loader';
 
 export default function Watchlist(props) {
 const [watchlist,setWatchlist]=useState(null);
-const {user,loggedin}=useContext(UserContext);
+let isEmpty=false;
+// const {user,loggedin}=useContext(UserContext);
+const dispatch=useDispatch();
+const user=useSelector((state)=> state.userdata.user);
+    // const userloading=useSelector((state)=> state.userdata.userLoading);
+    const loggedin=useSelector((state)=> state.userdata.loggedin);
+
+
+
 const navigate = useNavigate();
     useEffect(() => {
       const fetchlist=()=>
@@ -18,6 +29,8 @@ const navigate = useNavigate();
         // Handle the response from backend here
         .then((res) => {
             setWatchlist(res.data.list);
+            if(res.data.list.length>0) isEmpty=true;
+
         })
         // Catch errors if any
         .catch((err) => { });
@@ -65,11 +78,20 @@ const navigate = useNavigate();
     <a style={{padding:"0.5rem",background:"black",color:"white"}}>Watchlist</a>
     {watchlist ? 
         <div className='list'>
-    {watchlist.map((element)=>{
+    {watchlist.map((element,index)=>{
+        const handleRemove=()=>{
+            const updatedWatchlist = [...watchlist];
+    // Remove the element at the specified index
+    updatedWatchlist.splice(index, 1);
+
+    // Update the watchlist state
+    setWatchlist(updatedWatchlist);
+    dispatch(remove(index));
+        }
         if(element.type==='movie'){
             return (
                 <div style={{marginTop:"20px"}}>
-                <button type="button" class="btn btn-primary btn-sm">remove</button>
+                <button type="button" class="btn btn-primary btn-sm" onClick={handleRemove}>remove</button>
                 <Movieitems poster={element.image} rating={element.rating} name={element.name} date={element.date}/>
                 </div>
                 )
@@ -85,10 +107,11 @@ const navigate = useNavigate();
             }
     })}
     </div>
-    : 
+    : isEmpty?
     <div style={{display:"flex",justifyContent:'center'}}>
     "Empty"
     </div>
+    : <Loader/>
     }
     
    </div>

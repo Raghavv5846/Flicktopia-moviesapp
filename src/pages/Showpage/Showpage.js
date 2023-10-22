@@ -12,10 +12,13 @@ import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
 import LazyLoad from 'react-lazy-load';
 import Navbar from '../../components/Navbar';
+import { useSelector } from 'react-redux';
 
 export default function Showpage(props) {
-  
-  const {user , loggedin}=useContext(UserContext);
+  const user=useSelector((state)=> state.userdata.user);
+    // const userloading=useSelector((state)=> state.userdata.userLoading);
+    const loggedin=useSelector((state)=> state.userdata.loggedin);
+  // const {user , loggedin}=useContext(UserContext);
     const [showdata,setShowdata]=useState(null);
     const [episode,setEpisode]=useState(null)
     const [currentseason,setCurrentseason]=useState("1");

@@ -6,9 +6,10 @@ import { UserContext } from '../context/UserContext';
 import $ from 'jquery'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 export default function Navbar(props) {
     const navigate = useNavigate();
-    const {user,loggedin}=useContext(UserContext);
+    const {user,loggedin}=useSelector((state)=>state.userdata);
     const handleLogout=()=>{
         axios({url: `${process.env.REACT_APP_HOST}/logout`,withCredentials: true,})
         // Handle the response from backend here

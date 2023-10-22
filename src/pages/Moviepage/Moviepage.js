@@ -10,6 +10,7 @@ import Moviepage3 from './Details';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
+import { useSelector } from 'react-redux';
 
 
 export default function Moviepage(props) {
@@ -19,7 +20,10 @@ export default function Moviepage(props) {
     const [isSimilar,setIsSimilar]=useState(true);
     const [imdbdata,setImdbdata]=useState(null);
     const [selectedOption, setSelectedOption] = useState('similar');
-    const {user,loggedin}=useContext(UserContext);
+    const user=useSelector((state)=> state.userdata.user);
+    const userloading=useSelector((state)=> state.userdata.userLoading);
+    const loggedin=useSelector((state)=> state.userdata.loggedin);
+    // const {user,loggedin}=useContext(UserContext);
     const [watchadded,setWatchadded]=useState(false);
     const [adding,setAdding]=useState(false);
     const [watchdata,setWatchdata]=useState({
