@@ -103,7 +103,7 @@ app.get('/logout',passport.checkAuthentication,async (req,res)=>{
     return res.send({status:"success"});
 })
 app.get('/protected',passport.checkAuthentication,async (req,res)=>{
-    const allowedOrigins = ['http://localhost:3000', 'https://flicktopia-moviesapp.vercel.app/']; // Add your allowed origins here
+    const allowedOrigins = ['http://localhost:3000', 'https://flicktopia-moviesapp-l481yl8ct-raghavv5846.vercel.app/']; // Add your allowed origins here
   const requestOrigin = req.get('origin');
  
   if (allowedOrigins.includes(requestOrigin)) {
