@@ -108,7 +108,7 @@ app.get('/logout',passport.checkAuthentication,async (req,res)=>{
 app.get('/protected',passport.checkAuthentication,async (req,res)=>{
     const allowedOrigins = ['http://localhost:3000', 'https://flicktopia-moviesapp-l481yl8ct-raghavv5846.vercel.app/']; // Add your allowed origins here
   const requestOrigin = req.get('origin');
- 
+ console.log(requestOrigin);
   if (allowedOrigins.includes(requestOrigin)) {
     res.setHeader('Access-Control-Allow-Origin', requestOrigin);
   } else {
